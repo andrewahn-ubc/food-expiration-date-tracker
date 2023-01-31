@@ -6,9 +6,8 @@ of them. Fresher would allow you to have convenient access to:
 
 - all items in your fridge, separated by category
 - items that have expired
-- items that will expire in a given timeframe, say 1 week
-- a working grocery list that automatically updates when an essential item expires
 - search an item's name to see when it expires
+
 
 Fresher could be useful for anyone that has to keep track of 
 food items, whether that be a restaurant with hundreds of 
@@ -24,6 +23,6 @@ safe to eat.
 
 ### User Stories
 - As a user, I want to be able to add a food item to the fridge
-- As a user, I want to be able to view a list of all the items in my fridge
 - As a user, I want to be able to view the list of expired items 
 - As a user, I want to be able to specify the category for each food item, such as "dairy" for milk.
+- As a user, I want to be able to search for a food item in my fridge and see its expiration date
