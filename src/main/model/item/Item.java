@@ -2,44 +2,29 @@ package model.item;
 
 import java.util.Date;
 
-public abstract class Item {
-    private String name;
-    private Date expDate;
+// Represents an item having a name, date and category (eg. dairy, meat, etc.).
+public class Item {
+    private final String name;
+    private final Date expDate;
+    private final String category;
 
-    // REQUIRES:
-    // MODIFIES:
     // EFFECTS: constructs an item with a name and an expiration date
-    public Item(String name, Date expDate) {
+    public Item(String name, Date expDate, String category) {
         this.name = name;
         this.expDate = expDate;
+        this.category = category;
     }
 
-    // REQUIRES:
-    // MODIFIES:
-    // EFFECTS:
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    // REQUIRES:
-    // MODIFIES:
-    // EFFECTS:
     public String getName() {
         return this.name;
     }
 
-    // REQUIRES:
-    // MODIFIES:
-    // EFFECTS:
-    public void setExpDate(Date expDate) {
-        this.expDate = expDate;
-    }
-
-    // REQUIRES:
-    // MODIFIES:
-    // EFFECTS:
     public Date getExpDate() {
         return this.expDate;
+    }
+
+    public String getCategory() {
+        return this.category;
     }
 }
 

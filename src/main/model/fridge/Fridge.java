@@ -4,52 +4,54 @@ import model.item.Item;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Objects;
 
+// Represents a fridge - an ArrayList of food items.
 public class Fridge {
-    private ArrayList<Item> fridge;
+    private ArrayList<Item> allItems;
 
     // EFFECTS: constructs an empty fridge
     public Fridge() {
-        this.fridge = new ArrayList<>();
+        this.allItems = new ArrayList<>();
     }
 
-    // EFFECTS: returns the fridge
-    public ArrayList<Item> getFridge() {
-        return this.fridge;
+    public ArrayList<Item> getAllItems() {
+        return this.allItems;
     }
 
     // MODIFIES: this
-    // EFFECTS: adds the given item to the fridge
+    // EFFECTS: Adds the given item to the list of all items.
     public void addItem(Item i) {
-        this.fridge.add(i);
+        this.allItems.add(i);
     }
 
-    // MODIFIES: this
-    // EFFECTS: If an item matching the given name is found in fridge, removes it and prints out "Item removed".
-    //          If not (as in the fridge size remains unchanged), prints out "Item not found".
-    public void removeItem(String name) {
-        int initialSize = this.fridge.size();
+    // EFFECTS: Returns all the items in the fridge of a given category.
+    //          String comparisons are case-insensitive.
+    public ArrayList<Item> getItemsInCat(String cat) {
+        ArrayList<Item> itemsInCat = new ArrayList<>();
 
-        for (Item i: this.fridge) {
-            if (Objects.equals(i.getName(), name)) {
-                this.fridge.remove(i);
+        for (Item i : this.allItems) {
+            if (cat.equalsIgnoreCase(i.getCategory())) {
+                itemsInCat.add(i);
             }
         }
 
-        if (initialSize == this.fridge.size()) {
-            System.out.println("Item not found");
-        } else {
-            System.out.println("Item removed");
-        }
+        return itemsInCat;
     }
 
-    // EFFECTS: returns the list of items whose expiry dates are before today's date
+    // MODIFIES: this
+    // EFFECTS: If an item matching the given name is found in fridge, removes it.
+    //          If not, nothing changes.
+    public void removeItem(String name) {
+        this.allItems.removeIf(i -> name.equalsIgnoreCase(i.getName()));
+    }
+
+    // EFFECTS: Returns the list of items whose expiry dates are before today's date.
     public ArrayList<Item> viewExpiredItems() {
         ArrayList<Item> expiredItems = new ArrayList<>();
+        Date todayDate = new Date();
 
-        for (Item i: this.fridge) {
-            if (after(i.getExpDate())) {
+        for (Item i : this.allItems) {
+            if (todayDate.after(i.getExpDate())) {
                 expiredItems.add(i);
             }
         }
@@ -57,17 +59,16 @@ public class Fridge {
         return expiredItems;
     }
 
-    // EFFECTS: If an item with the given name is found in the fridge, returns its expiration date.
-    //          If not, prints out "Item not found".
+    // EFFECTS: Returns the expiration date of the item with the given name. If an item
+    //          with the given name is not found, returns null.
     public Date findExpDate(String name) {
-        for (Item i: this.fridge) {
-            if (Objects.equals(i.getName(), name)) {
-                return i.getExpDate();
+        Date desiredDate = null;
+        for (Item i : this.allItems) {
+            if (name.equalsIgnoreCase(i.getName())) {
+                desiredDate = i.getExpDate();
             }
         }
 
-        // will the following line always be printed? or will it not be executed if the return statement
-        // above executes?
-        System.out.println("Item not found.");
+        return desiredDate;
     }
 }
