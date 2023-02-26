@@ -1,11 +1,9 @@
-package model.fridge;
-
-import model.item.Item;
+package model;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-// Represents a fridge - an ArrayList of food items.
+// Represents a fridge - a list of food items.
 public class Fridge {
     private ArrayList<Item> allItems;
 
@@ -19,13 +17,24 @@ public class Fridge {
     }
 
     // MODIFIES: this
-    // EFFECTS: Adds the given item to the list of all items.
+    // EFFECTS: Adds the given item to the fridge if its name is new.
     public void addItem(Item i) {
-        this.allItems.add(i);
+        String itemName = i.getName();
+        boolean unique = true;
+
+        for (Item originalItem : this.allItems) {
+            if (itemName.equalsIgnoreCase(originalItem.getName())) {
+                unique = false;
+                break;
+            }
+        }
+
+        if (unique) {
+            this.allItems.add(i);
+        }
     }
 
     // EFFECTS: Returns all the items in the fridge of a given category.
-    //          String comparisons are case-insensitive.
     public ArrayList<Item> getItemsInCat(String cat) {
         ArrayList<Item> itemsInCat = new ArrayList<>();
 
@@ -40,7 +49,6 @@ public class Fridge {
 
     // MODIFIES: this
     // EFFECTS: If an item matching the given name is found in fridge, removes it.
-    //          If not, nothing changes.
     public void removeItem(String name) {
         this.allItems.removeIf(i -> name.equalsIgnoreCase(i.getName()));
     }
@@ -59,10 +67,10 @@ public class Fridge {
         return expiredItems;
     }
 
-    // EFFECTS: Returns the expiration date of the item with the given name. If an item
-    //          with the given name is not found, returns null.
+    // EFFECTS: Returns the expiration date of the item with the given name, if it exists.
     public Date findExpDate(String name) {
         Date desiredDate = null;
+
         for (Item i : this.allItems) {
             if (name.equalsIgnoreCase(i.getName())) {
                 desiredDate = i.getExpDate();

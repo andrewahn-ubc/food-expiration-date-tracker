@@ -1,8 +1,8 @@
-package model.item;
+package model;
 
 import java.util.Date;
 
-// Represents an item having a name, date and category (eg. dairy, meat, etc.).
+// Represents an item having a name, date and category (eg. dairy, protein, etc.).
 public class Item {
     private final String name;
     private final Date expDate;

@@ -1,7 +1,5 @@
 package model;
 
-import model.fridge.Fridge;
-import model.item.Item;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +8,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+// Unit tests for the Fridge class.
 public class FridgeTest {
     private Fridge fridge;
     private Date date1;
@@ -35,13 +35,28 @@ public class FridgeTest {
     }
 
     @Test
-    public void testAddItem() {
+    public void testAddItemNoDupes() {
         fridge.addItem(item1);
         fridge.addItem(item2);
         fridge.addItem(item3);
 
         ArrayList<Item> allItems = fridge.getAllItems();
 
+        assertEquals(item1, allItems.get(0));
+        assertEquals(item2, allItems.get(1));
+        assertEquals(item3, allItems.get(2));
+    }
+
+    @Test
+    public void testAddItemOneDupe() {
+        fridge.addItem(item1);
+        fridge.addItem(item2);
+        fridge.addItem(item2);
+        fridge.addItem(item3);
+
+        ArrayList<Item> allItems = fridge.getAllItems();
+
+        assertEquals(3, allItems.size());
         assertEquals(item1, allItems.get(0));
         assertEquals(item2, allItems.get(1));
         assertEquals(item3, allItems.get(2));

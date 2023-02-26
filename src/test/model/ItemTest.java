@@ -1,6 +1,5 @@
 package model;
 
-import model.item.Item;
 import org.junit.jupiter.api.Test;
 
 import java.util.Calendar;
@@ -8,6 +7,7 @@ import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// Unit test for the Item class.
 public class ItemTest {
     @Test
     public void testConstructor() {

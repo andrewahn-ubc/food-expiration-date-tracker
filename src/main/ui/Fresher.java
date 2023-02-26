@@ -1,14 +1,14 @@
 package ui;
 
-import model.fridge.Fridge;
-import model.item.Item;
+import model.Fridge;
+import model.Item;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 
-// The main application through which fridges and items are accessed by the user.
+// The main application through which the fridge can be accessed by the user.
 public class Fresher {
     private Scanner input;
     private Fridge fridge;
@@ -18,8 +18,8 @@ public class Fresher {
         runFresher();
     }
 
-    // MODIFIES:
-    // EFFECTS:
+    // MODIFIES: this
+    // EFFECTS: Processes user input.
     public void runFresher() {
         boolean keepGoing = true;
         String command;
@@ -42,12 +42,15 @@ public class Fresher {
         System.out.println("\nBon appetit!");
     }
 
+    // MODIFIES: this
+    // EFFECTS: Initializes an input scanner and a fridge.
     public void initialization() {
         input = new Scanner(System.in);
         input.useDelimiter("\n");
         fridge = new Fridge();
     }
 
+    // EFFECTS: Prints out all the options for Fresher.
     public void displayMenu() {
         System.out.println("\nSelect one of the following:");
         System.out.println("\ta -> add an item to the fridge");
@@ -59,6 +62,8 @@ public class Fresher {
         System.out.println("\tq -> quit the application");
     }
 
+    // MODIFIES: this
+    // EFFECTS: Processes user input when it is not "q".
     public void processCommand(String command) {
         switch (command) {
             case "a":
@@ -85,7 +90,30 @@ public class Fresher {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: Creates a new item and tries to add it to the fridge.
     public void doAddItem() {
+        Item item = makeNewItem();
+
+        ArrayList<Item> allItems = fridge.getAllItems();
+        int initialFridgeSize = allItems.size();
+
+        fridge.addItem(item);
+
+        int finalFridgeSize = allItems.size();
+
+        if (initialFridgeSize == finalFridgeSize) {
+            System.out.println("\n"
+                    + "An item with that name already exists."
+                    + " Please choose a different name (eg. beef_2)!");
+        } else {
+            System.out.println("\nItem successfully added. Yum!");
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Prompts the user for parameters and uses them to form an Item instantiation.
+    public Item makeNewItem() {
         System.out.println("\nWhat is the item name?");
         String itemName = input.next();
 
@@ -101,14 +129,6 @@ public class Fresher {
         System.out.println("\nFood group (eg. Protein, Dairy, Fruit, etc.)");
         String itemCat = input.next();
 
-        Item item = makeItem(itemName, expYear, expMonth, expDay, itemCat);
-
-        fridge.addItem(item);
-
-        System.out.println("\nItem successfully added. Yum!");
-    }
-
-    public Item makeItem(String itemName, int expYear, int expMonth, int expDay, String itemCat) {
         Calendar c = Calendar.getInstance();
         c.set(expYear, (expMonth - 1), expDay);
         Date itemExpDate = c.getTime();
@@ -116,6 +136,8 @@ public class Fresher {
         return new Item(itemName, itemExpDate, itemCat);
     }
 
+    // MODIFIES: this
+    // EFFECTS: If an item with the given name is found, removes it from the fridge.
     public void doRemoveItem() {
         System.out.println("\nWhat is the name of the item you want to remove?");
         String itemName = input.next();
@@ -134,6 +156,7 @@ public class Fresher {
         }
     }
 
+    // EFFECTS: If there are expired items, prints out the list of names of expired items.
     public void doViewExpiredItems() {
         ArrayList<Item> expiredItemList = fridge.viewExpiredItems();
 
@@ -151,6 +174,7 @@ public class Fresher {
         }
     }
 
+    // EFFECTS: Prints out the expiration date of an item with the given name, if found.
     public void doFindExpDate() {
         System.out.println("\nWhat is the name of the item you are curious about?");
         String itemName = input.next();
@@ -173,6 +197,7 @@ public class Fresher {
         }
     }
 
+    // EFFECTS: Prints out a list of all the items in the fridge.
     public void doGetAllItems() {
         ArrayList<Item> allItems = fridge.getAllItems();
 
@@ -189,6 +214,7 @@ public class Fresher {
         }
     }
 
+    // EFFECTS: Prints out the list of all the items in the fridge in the given category.
     public void doGetItemsInCat() {
         System.out.println("\nWhich food group are you interested in?");
         String cat = input.next();
