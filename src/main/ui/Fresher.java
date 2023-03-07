@@ -27,7 +27,7 @@ public class Fresher {
         initialization();
 
         while (keepGoing) {
-            displayMenu();
+            displayMenuMain();
 
             command = input.next();
             command = command.toLowerCase();
@@ -35,7 +35,7 @@ public class Fresher {
             if (command.equals("q")) {
                 keepGoing = false;
             } else {
-                processCommand(command);
+                processCommandMain(command);
             }
         }
 
@@ -50,28 +50,65 @@ public class Fresher {
         fridge = new Fridge();
     }
 
-    // EFFECTS: Prints out all the options for Fresher.
-    public void displayMenu() {
+    // EFFECTS: Prints out the main options for Fresher.
+    public void displayMenuMain() {
         System.out.println("\nSelect one of the following:");
-        System.out.println("\ta -> add an item to the fridge");
-        System.out.println("\tr -> remove an item from the fridge");
-        System.out.println("\tf -> find the expiration date of a given item");
-        System.out.println("\te -> view the list of expired items");
-        System.out.println("\tt -> view the total list of items");
-        System.out.println("\tc -> view all items in a given category");
+        System.out.println("\ti -> edit inventory");
+        System.out.println("\tv -> view inventory");
         System.out.println("\tq -> quit the application");
     }
 
     // MODIFIES: this
-    // EFFECTS: Processes user input when it is not "q".
-    public void processCommand(String command) {
+    // EFFECTS: Processes initial user input when it is not "q".
+    public void processCommandMain(String command) {
         switch (command) {
+            case "i":
+                processCommandEdit();
+                break;
+            case "v":
+                processCommandView();
+                break;
+            default:
+                System.out.println("\nThat's an invalid entry :(");
+                break;
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Processes user input for editing options.
+    public void processCommandEdit() {
+        displayMenuEdit();
+
+        String nextCommand = input.next();
+
+        switch (nextCommand) {
             case "a":
                 doAddItem();
                 break;
             case "r":
                 doRemoveItem();
                 break;
+            default:
+                System.out.println("\nThat's an invalid entry :(");
+                break;
+        }
+    }
+
+    // EFFECTS: Prints out the sub options for edit inventory
+    public void displayMenuEdit() {
+        System.out.println("\nSelect one of the following:");
+        System.out.println("\ta -> add an item to the fridge");
+        System.out.println("\tr -> remove an item from the fridge");
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Processes user input for viewing options.
+    public void processCommandView() {
+        displayMenuView();
+
+        String nextCommand = input.next();
+
+        switch (nextCommand) {
             case "f":
                 doFindExpDate();
                 break;
@@ -88,6 +125,14 @@ public class Fresher {
                 System.out.println("\nThat's an invalid entry :(");
                 break;
         }
+    }
+
+    // EFFECTS: Prints out the sub options for edit inventory
+    public void displayMenuView() {
+        System.out.println("\tf -> find the expiration date of a given item");
+        System.out.println("\te -> view the list of expired items");
+        System.out.println("\tt -> view the total list of items");
+        System.out.println("\tc -> view all items in a given category");
     }
 
     // MODIFIES: this

@@ -26,3 +26,5 @@ safe to eat.
 - As a user, I want to be able to view the list of expired items 
 - As a user, I want to be able to specify the category for each food item, such as "dairy" for milk.
 - As a user, I want to be able to search for a food item in my fridge and see its expiration date
+- As a user, I want to have the option of saving the entire inventory when I select "quit"
+- As a user, I want to have the ability to reload my fridge when I open the application
