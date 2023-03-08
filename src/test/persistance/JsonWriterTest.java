@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-// The unit test class for JsonWriter. Tests its exceptional handling and general function.
+// The unit test class for JsonWriter. Tests its exceptional handling & general function.
 public class JsonWriterTest extends JsonTest {
 
     @Test
