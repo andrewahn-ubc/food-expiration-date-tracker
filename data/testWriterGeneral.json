@@ -1,12 +1,12 @@
 {"Items": [
-         {
-                  "Expiration Date": "10/10/1010",
-                  "Category": "protein",
-                  "Name": "beef"
-         },
-         {
-                  "Expiration Date": "11/11/1111",
-                  "Category": "vegetable",
-                  "Name": "corn"
-         }
+ {
+  "Expiration Date": "10/10/1010",
+  "Category": "protein",
+  "Name": "beef"
+ },
+ {
+  "Expiration Date": "11/11/1111",
+  "Category": "vegetable",
+  "Name": "corn"
+ }
 ]}
