@@ -12,7 +12,7 @@ import static com.sun.tools.javac.util.LayoutCharacters.TAB;
 
 // Represents the object that transcribes the current fridge onto a file as a JSON object.
 public class JsonWriter {
-    private String destination;
+    private final String destination;
     private PrintWriter writer;
 
     // EFFECTS: Constructs a writer with a destination.

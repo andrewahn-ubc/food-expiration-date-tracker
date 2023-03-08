@@ -12,13 +12,12 @@ import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.stream.Stream;
 
 // Represents the object that transcribes data to the current fridge.
 public class JsonReader {
-    private String source;
+    private final String source;
     private Fridge fridge;
 
     // EFFECTS: Constructs a reader with a file source.
@@ -42,7 +41,7 @@ public class JsonReader {
         StringBuilder contentBuilder = new StringBuilder();
 
         try (Stream<String> stream = Files.lines(Paths.get(fileName), StandardCharsets.UTF_8)) {
-            stream.forEach(s -> contentBuilder.append(s));
+            stream.forEach(contentBuilder::append);
         }
 
         return contentBuilder.toString();

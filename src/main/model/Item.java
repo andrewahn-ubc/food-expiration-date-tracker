@@ -5,12 +5,11 @@ import org.json.JSONObject;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.time.LocalDate;
 
 // Represents an item having a name, date and category (eg. dairy, protein, etc.).
 public class Item {
+    private static final DateFormat expDateFormat = new SimpleDateFormat("MM/dd/yyyy");
     private final String name;
     private final Date expDate;
     private final String category;
@@ -24,12 +23,19 @@ public class Item {
 
     // EFFECTS: Same as other constructor except accepts expiration Date in String form.
     public Item(String name, String strExpDate, String category) throws ParseException {
-        DateFormat expDateFormat = new SimpleDateFormat("MM/dd/yyyy");
-        Date expDate = expDateFormat.parse(strExpDate);
-
         this.name = name;
-        this.expDate = expDate;
+        this.expDate = strToDate(strExpDate);
         this.category = category;
+    }
+
+    // EFFECTS: Converts a date object into its string form.
+    public static String dateToStr(Date date) {
+        return expDateFormat.format(date);
+    }
+
+    // EFFECTS: Converts a date in string form into its Date form.
+    public static Date strToDate(String str) throws ParseException {
+        return expDateFormat.parse(str);
     }
 
     public String getName() {
@@ -47,9 +53,7 @@ public class Item {
     // EFFECTS: Documents an item's information onto a JSON object.
     public JSONObject toJson() {
         JSONObject jsonItem = new JSONObject();
-
-        DateFormat myFormat = new SimpleDateFormat("dd/MM/yyyy");
-        String strExpDate = myFormat.format(expDate);
+        String strExpDate = dateToStr(this.expDate);
 
         jsonItem.put("Name", name);
         jsonItem.put("Expiration Date", strExpDate);

@@ -8,15 +8,17 @@ import persistance.JsonWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 
+import static model.Item.dateToStr;
+import static model.Item.strToDate;
+
 // The main application through which the fridge can be accessed by the user.
 public class Fresher {
-    private String destination = "./data/fridge.json";
-    private JsonReader jsonReader = new JsonReader(destination);
-    private JsonWriter jsonWriter = new JsonWriter(destination);
+    private final String destination = "./data/fridge.json";
+    private final JsonReader jsonReader = new JsonReader(destination);
+    private final JsonWriter jsonWriter = new JsonWriter(destination);
     private Scanner input;
     private Fridge fridge;
 
@@ -60,8 +62,8 @@ public class Fresher {
     // EFFECTS: Prints out the main options for Fresher.
     public void displayMenuMain() {
         System.out.println("\nSelect one of the following:");
-        System.out.println("\tl -> load your fridge");
-        System.out.println("\ts -> save your fridge");
+        System.out.println("\tl -> reload your fridge");
+        System.out.println("\ts -> save your current fridge");
         System.out.println("\ti -> edit inventory");
         System.out.println("\tv -> view inventory");
         System.out.println("\tq -> quit the application");
@@ -93,7 +95,6 @@ public class Fresher {
     // EFFECTS: Processes user input for editing options.
     public void processCommandEdit() {
         displayMenuEdit();
-
         String nextCommand = input.next();
 
         switch (nextCommand) {
@@ -153,47 +154,40 @@ public class Fresher {
     // MODIFIES: this
     // EFFECTS: Creates a new item and tries to add it to the fridge.
     public void doAddItem() {
-        Item item = makeNewItem();
+        try {
+            Item item = makeNewItem();
+            ArrayList<Item> allItems = fridge.getAllItems();
 
-        ArrayList<Item> allItems = fridge.getAllItems();
-        int initialFridgeSize = allItems.size();
+            int initialFridgeSize = allItems.size();
+            fridge.addItem(item);
+            int finalFridgeSize = allItems.size();
 
-        fridge.addItem(item);
-
-        int finalFridgeSize = allItems.size();
-
-        if (initialFridgeSize == finalFridgeSize) {
-            System.out.println("\n"
-                    + "An item with that name already exists."
-                    + " Please choose a different name (eg. beef_2)!");
-        } else {
-            System.out.println("\nItem successfully added. Yum!");
+            if (initialFridgeSize == finalFridgeSize) {
+                System.out.println("\n"
+                        + "An item with that name already exists."
+                        + " Please choose a different name (eg. beef_2)!");
+            } else {
+                System.out.println("\nItem successfully added. Yum!");
+            }
+        } catch (ParseException e) {
+            System.out.println("That expiration date is not valid!");
         }
     }
 
     // MODIFIES: this
     // EFFECTS: Prompts the user for parameters and uses them to form an Item instantiation.
-    public Item makeNewItem() {
+    public Item makeNewItem() throws ParseException {
         System.out.println("\nWhat is the item name?");
         String itemName = input.next();
 
-        System.out.println("\nExpiration year?");
-        int expYear = input.nextInt();
-
-        System.out.println("\nExpiration month in integer form (eg. January = 1)?");
-        int expMonth = input.nextInt();
-
-        System.out.println("\nExpiration day?");
-        int expDay = input.nextInt();
+        System.out.println("\nWhat is its expiration date in form mm/dd/yyyy?");
+        String expDateInput = input.next();
+        Date expDate = strToDate(expDateInput);
 
         System.out.println("\nFood group (eg. Protein, Dairy, Fruit, etc.)");
         String itemCat = input.next();
 
-        Calendar c = Calendar.getInstance();
-        c.set(expYear, (expMonth - 1), expDay);
-        Date itemExpDate = c.getTime();
-
-        return new Item(itemName, itemExpDate, itemCat);
+        return new Item(itemName, expDate, itemCat);
     }
 
     // MODIFIES: this
@@ -244,16 +238,9 @@ public class Fresher {
         if (desiredExpDate == null) {
             System.out.println("\nNo items in the fridge with that name were found...");
         } else {
-            Calendar c = Calendar.getInstance();
-            c.setTime(desiredExpDate);
-
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            month = month + 1;
-            int day = c.get(Calendar.DAY_OF_MONTH);
-
-            System.out.println("\nThe expiration date for " + itemName + " is "
-                    + year + "/" + month + "/" + day + ".");
+            String strDate = dateToStr(desiredExpDate);
+            System.out.println("\nThe expiration date for "
+                    + itemName + " is " + strDate + ".");
         }
     }
 

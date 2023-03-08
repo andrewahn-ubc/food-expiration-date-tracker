@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// The unit test class for JsonWriter. Tests its exceptional handling and general function.
 public class JsonWriterTest extends JsonTest {
 
     @Test
@@ -65,6 +66,7 @@ public class JsonWriterTest extends JsonTest {
         }
     }
 
+    // Helper method for testGeneralFridge().
     public void initializeFile() throws IOException, ParseException {
         JsonWriter writer = new JsonWriter("data/testWriterGeneral.json");
         Fridge fridge = new Fridge();

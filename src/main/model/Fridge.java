@@ -89,7 +89,7 @@ public class Fridge {
         JSONObject jsonFridge = new JSONObject();
         JSONArray jsonItemList = new JSONArray();
 
-        for (Item i: allItems) {
+        for (Item i : allItems) {
             JSONObject jsonItem = i.toJson();
             jsonItemList.put(jsonItem);
         }

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+// The unit test class for JsonReader, testing its exception-handling as well as function.
 public class JsonReaderTest extends JsonTest {
     @Test
     public void testFileNotFound() {
@@ -18,9 +19,9 @@ public class JsonReaderTest extends JsonTest {
         try {
             reader.read();
             fail("IOException should have been thrown.");
-        } catch(ParseException p) {
+        } catch (ParseException p) {
             fail("ParseException shouldn't have been thrown here.");
-        } catch(IOException e) {
+        } catch (IOException e) {
             // pass
         }
     }
@@ -33,9 +34,9 @@ public class JsonReaderTest extends JsonTest {
             ArrayList<Item> items = fridge.getAllItems();
 
             assertEquals(0, items.size());
-        } catch(IOException e) {
+        } catch (IOException e) {
             fail("IOException shouldn't have been thrown here.");
-        } catch(ParseException p) {
+        } catch (ParseException p) {
             fail("ParseException shouldn't have been thrown here.");
         }
 
@@ -52,9 +53,9 @@ public class JsonReaderTest extends JsonTest {
             assertEquals(2, items.size());
             checkItem("beef", "10/10/1010", "protein", items.get(0));
             checkItem("corn", "11/11/1111", "vegetable", items.get(1));
-        } catch(IOException e) {
+        } catch (IOException e) {
             fail("IOException shouldn't have been thrown here.");
-        } catch(ParseException p) {
+        } catch (ParseException p) {
             fail("ParseException shouldn't have been thrown here.");
         }
     }
