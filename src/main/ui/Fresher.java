@@ -2,7 +2,11 @@ package ui;
 
 import model.Fridge;
 import model.Item;
+import persistance.JsonReader;
+import persistance.JsonWriter;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -10,6 +14,9 @@ import java.util.Scanner;
 
 // The main application through which the fridge can be accessed by the user.
 public class Fresher {
+    private String destination = "./data/fridge.json";
+    private JsonReader jsonReader = new JsonReader(destination);
+    private JsonWriter jsonWriter = new JsonWriter(destination);
     private Scanner input;
     private Fridge fridge;
 
@@ -53,6 +60,8 @@ public class Fresher {
     // EFFECTS: Prints out the main options for Fresher.
     public void displayMenuMain() {
         System.out.println("\nSelect one of the following:");
+        System.out.println("\tl -> load your fridge");
+        System.out.println("\ts -> save your fridge");
         System.out.println("\ti -> edit inventory");
         System.out.println("\tv -> view inventory");
         System.out.println("\tq -> quit the application");
@@ -62,6 +71,12 @@ public class Fresher {
     // EFFECTS: Processes initial user input when it is not "q".
     public void processCommandMain(String command) {
         switch (command) {
+            case "s":
+                processCommandSave();
+                break;
+            case "l":
+                processCommandLoad();
+                break;
             case "i":
                 processCommandEdit();
                 break;
@@ -276,6 +291,32 @@ public class Fresher {
                 itemCount++;
                 System.out.println("\t" + itemCount + ". " + i.getName());
             }
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Saves the current fridge into a data file in JSON format.
+    public void processCommandSave() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(this.fridge);
+            jsonWriter.close();
+            System.out.println("Your fridge has successfully been saved!");
+        } catch (IOException e) {
+            System.out.println("The fridge could not be saved :(");
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Loads the data from a data file into the current fridge.
+    public void processCommandLoad() {
+        try {
+            this.fridge = jsonReader.read();
+            System.out.println("Your fridge has successfully been loaded from " + destination);
+        } catch (IOException e) {
+            System.out.println("The fridge could not be loaded :,)");
+        } catch (ParseException p) {
+            System.out.println("There is at least 1 item in the fridge whose date could not be read.");
         }
     }
 }

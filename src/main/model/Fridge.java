@@ -1,5 +1,8 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -78,5 +81,20 @@ public class Fridge {
         }
 
         return desiredDate;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Converts a fridge to JSON format, then saves it onto the destination file.
+    public JSONObject toJson() {
+        JSONObject jsonFridge = new JSONObject();
+        JSONArray jsonItemList = new JSONArray();
+
+        for (Item i: allItems) {
+            JSONObject jsonItem = i.toJson();
+            jsonItemList.put(jsonItem);
+        }
+
+        jsonFridge.put("Items", jsonItemList);
+        return jsonFridge;
     }
 }
