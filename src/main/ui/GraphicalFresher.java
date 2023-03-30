@@ -19,21 +19,21 @@ import static model.Item.dateToStr;
 
 // Graphical UI for Fresher
 public class GraphicalFresher extends JFrame implements ActionListener {
-    private final SpringLayout layout;
-    private final JPanel contentPane;
-    private DefaultListModel<Item> listItems;
-    private JList<Item> list;
-    private JScrollPane listScrollPane;
-    private JButton removeItemBtn;
-    private final JPanel buttonPane;
-    private JTextField findExpDateField;
-    private JPanel newPanel;
-    private JTextField t1;
-    private JTextField t2;
-    private JTextField t3;
     private final String destination = "data/fridge.json";
     private final JsonWriter writer = new JsonWriter(destination);
     private final JsonReader reader = new JsonReader(destination);
+    private final SpringLayout layout;
+    private final JPanel contentPane;
+    private final JPanel buttonPane;
+    private JScrollPane listScrollPane;
+    private JPanel newPanel;
+    private JTextField findExpDateField;
+    private JTextField t1;
+    private JTextField t2;
+    private JTextField t3;
+    private JButton removeItemBtn;
+    private DefaultListModel<Item> listItems;
+    private JList<Item> list;
     private Fridge fridge;
 
     // EFFECT: constructs and initializes the GUI for Fresher
@@ -220,7 +220,8 @@ public class GraphicalFresher extends JFrame implements ActionListener {
         newPanel = (JPanel) newFrame.getContentPane();
         labelsForAddItem();
 
-        SpringUtilities.makeCompactGrid(newPanel, 4, 2, 5, 5, 5, 5);
+        SpringUtilities.makeCompactGrid(newPanel, 4, 2,
+                5, 5, 5, 5);
 
         newFrame.pack();
         newFrame.setLocationRelativeTo(null);
@@ -298,7 +299,7 @@ public class GraphicalFresher extends JFrame implements ActionListener {
                     new ImageIcon("data/gordonHappy.png"), JLabel.LEFT);
         } else {
             image = new JLabel(expired.size()
-                    + " expired items - go fix this right now you panini head!",
+                    + " expired item(s) - you panini head! Clean your fridge!",
                     new ImageIcon("data/gordonSad.png"), JLabel.LEFT);
         }
 
@@ -336,11 +337,13 @@ public class GraphicalFresher extends JFrame implements ActionListener {
             }
 
             this.list.setModel(listItems);
-            popUpMessage("Success", "Your fridge has successfully been loaded from " + destination);
+            popUpMessage("Success",
+                    "Your fridge has successfully been loaded from " + destination);
         } catch (IOException e) {
             popUpMessage("Error", "The fridge could not be loaded :,)");
         } catch (ParseException p) {
-            popUpMessage("Error", "There is at least 1 item in the fridge whose date could not be read.");
+            popUpMessage("Error",
+                    "There is at least 1 item in the fridge whose date could not be read.");
         }
     }
 
