@@ -61,5 +61,11 @@ public class Item {
 
         return jsonItem;
     }
+
+    // Effect: overrides Object's implementation of toString()
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }
 
