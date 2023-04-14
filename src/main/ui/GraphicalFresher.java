@@ -1,5 +1,7 @@
 package ui;
 
+import model.Event;
+import model.EventLog;
 import model.Fridge;
 import model.Item;
 import persistance.JsonReader;
@@ -9,6 +11,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -18,7 +22,7 @@ import javax.swing.SpringLayout;
 import static model.Item.dateToStr;
 
 // Graphical UI for Fresher
-public class GraphicalFresher extends JFrame implements ActionListener {
+public class GraphicalFresher extends JFrame implements ActionListener, WindowListener {
     private final String destination = "data/fridge.json";
     private final JsonWriter writer = new JsonWriter(destination);
     private final JsonReader reader = new JsonReader(destination);
@@ -35,11 +39,12 @@ public class GraphicalFresher extends JFrame implements ActionListener {
     private DefaultListModel<Item> listItems;
     private JList<Item> list;
     private Fridge fridge;
+    private EventLog log = EventLog.getInstance();
 
     // EFFECT: constructs and initializes the GUI for Fresher
     public GraphicalFresher() {
         super("My Fridge");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        addWindowListener(this);
         layout = new SpringLayout();
         setLayout(layout);
         contentPane = (JPanel) getContentPane();
@@ -356,6 +361,53 @@ public class GraphicalFresher extends JFrame implements ActionListener {
         window.pack();
         window.setLocationRelativeTo(null);
         window.setVisible(true);
+    }
+
+    // EFFECT: Null - simply here to ensure that the compiler runs.
+    @Override
+    public void windowOpened(WindowEvent e) {
+    }
+
+    // MODIFIES: this
+    // EFFECT: disposes the window when it is closing
+    @Override
+    public void windowClosing(WindowEvent e) {
+        dispose();
+    }
+
+    // MODIFIES: this
+    // EFFECT: prints out the events that occurred while the program was running and
+    //         closes the application
+    @Override
+    public void windowClosed(WindowEvent e) {
+        for (Event ev: log) {
+            System.out.println(ev.getDescription());
+        }
+        System.exit(0);
+    }
+
+    // EFFECT: Null - simply here to ensure that the compiler runs.
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    // EFFECT: Null - simply here to ensure that the compiler runs.
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    // EFFECT: Null - simply here to ensure that the compiler runs.
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    // EFFECT: Null - simply here to ensure that the compiler runs.
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
     }
 }
 

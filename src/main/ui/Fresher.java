@@ -1,5 +1,6 @@
 package ui;
 
+import model.EventLog;
 import model.Fridge;
 import model.Item;
 import persistance.JsonReader;

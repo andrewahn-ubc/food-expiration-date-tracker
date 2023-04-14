@@ -9,6 +9,7 @@ import java.util.Date;
 // Represents a fridge - a list of food items.
 public class Fridge {
     private ArrayList<Item> allItems;
+    private EventLog log = EventLog.getInstance();
 
     // EFFECTS: constructs an empty fridge
     public Fridge() {
@@ -34,6 +35,8 @@ public class Fridge {
 
         if (unique) {
             this.allItems.add(i);
+            Event event = new Event("Added " + itemName + " to the fridge!");
+            log.logEvent(event);
         }
     }
 
@@ -53,7 +56,13 @@ public class Fridge {
     // MODIFIES: this
     // EFFECTS: If an item matching the given name is found in fridge, removes it.
     public void removeItem(String name) {
+        int initSize = this.allItems.size();
         this.allItems.removeIf(i -> name.equalsIgnoreCase(i.getName()));
+        int finalSize = this.allItems.size();
+        if (initSize != finalSize) {
+            Event event = new Event("Removed " + name + " from the fridge!");
+            log.logEvent(event);
+        }
     }
 
     // EFFECTS: Returns the list of items whose expiry dates are before today's date.
@@ -66,6 +75,10 @@ public class Fridge {
                 expiredItems.add(i);
             }
         }
+
+        Event event = new Event("Displayed the "
+                + expiredItems.size() + " expired item(s) in the fridge.");
+        log.logEvent(event);
 
         return expiredItems;
     }

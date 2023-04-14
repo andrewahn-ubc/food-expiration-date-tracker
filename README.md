@@ -60,3 +60,8 @@ safe to eat.
 A checkstyle warning was suppressed in the SpringUtilities class as a method was too long.
 It was written by a third party, so I felt that I should not modify it myself. 
 I'm sorry for not checking with you prior to using it!
+
+### Phase 4: Task 2
+Added Beef to the fridge! \
+Displayed the 1 expired item(s) in the fridge.\
+Removed Beef from the fridge!
