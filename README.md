@@ -64,4 +64,15 @@ I'm sorry for not checking with you prior to using it!
 ### Phase 4: Task 2
 Added Beef to the fridge! \
 Displayed the 1 expired item(s) in the fridge.\
-Removed Beef from the fridge!
+Removed Beef from the fridge!\
+
+### Phase 4: Task 3
+If I had more time, I would refactor the methods in the
+GraphicalFresher class that **add buttons to the main frame** 
+in the graphical UI. There are currently 5 such methods in
+the class, and they all perform similar functions. A major 
+benefit to this refactoring would be simplification. It would
+remove redundancy from the class and make the class easier
+to navigate. In addition, it would decrease the time it takes
+for the program to run since the function of 5 methods would
+be condensed into mostly 1 method. 
