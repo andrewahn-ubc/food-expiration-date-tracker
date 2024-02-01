@@ -23,7 +23,9 @@ safe to eat.
 
 ### User Stories
 - As a user, I want to be able to add a food item to the fridge
-- As a user, I want to be able to view the list of expired items 
+- As a user, I want to be able to delete a food item from the fridge
+- As a user, I want to be able to view the list of expired items
+- As a user, I want to be able to view the list of all items
 - As a user, I want to be able to specify the category for each food item, such as "dairy" for milk.
 - As a user, I want to be able to search for a food item in my fridge and see its expiration date
 - As a user, I want to have the option of saving the entire inventory in the main menu.
